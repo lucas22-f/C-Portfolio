@@ -1,0 +1,22 @@
+.miImg{
+    width: 16.3rem;
+    border-radius: 50%;
+    margin-top: 2rem;
+    opacity: 90%;
+}
+
+.miBody{
+    background-color: #08080e;
+    color: rgb(172, 182, 192);
+    
+}
+
+.seccionMSG{
+    margin-top: 5%;
+    padding-top: 5%;
+    padding-bottom: 10%;
+}
+
+.seccionMSG h2{
+    margin-bottom: 4rem;
+}
