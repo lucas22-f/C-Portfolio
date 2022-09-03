@@ -27,11 +27,23 @@ public class HomeController : Controller
             Nombre = "Lucas Figueroa",
             Edad = 22,
         }; */
+        var proyectos = ObtenerProyectos().Take(3).ToList();
+        var modelo = new HomeindexViewModel(){Proyectos=proyectos}; // PASADOR DE INFO homeindexVM
 
-
-        return View();
+        return View(modelo);
     }
+    private List<Proyecto> ObtenerProyectos(){
 
+
+        return new List<Proyecto>(){
+            new Proyecto{Titulo="Grill-House",Descripcion="TODO GOOGLE VIEJO",Link="https://google.com",ImagenURL="/img/p1.png"},
+            new Proyecto{Titulo="Buen VIaje",Descripcion="TODO GOOGLE VIEJO",Link="https://google.com",ImagenURL="/img/p2.png"},
+            new Proyecto{Titulo="Google",Descripcion="TODO GOOGLE VIEJO",Link="https://google.com",ImagenURL="/img/p3.png"},
+        };
+
+
+
+    }
     public IActionResult Privacy()
     {
         return View();
