@@ -40,6 +40,16 @@ public class HomeController : Controller
         return View(modelo);
     }
  
+
+    public IActionResult Proyectos(){
+        var proyectos = repositorios.ObtenerProyectos();
+        return View(proyectos);
+    }
+
+    public IActionResult Contacto(){
+        return View();
+    }
+
     public IActionResult Privacy()
     {
         return View();
