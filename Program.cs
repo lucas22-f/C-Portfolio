@@ -19,6 +19,7 @@ builder.Services.AddTransient<IRepositorios,Repositorios>(); // automaticamente 
 
     */
 
+builder.Services.AddTransient<IservicioEmail,ServicioEmail>();
 
 var app = builder.Build();
 

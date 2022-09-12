@@ -1,4 +1,4 @@
- namespace Portfolio.Models
+ namespace PortFolio.Models
  {
     public class EjemploGuidViewModel{
         

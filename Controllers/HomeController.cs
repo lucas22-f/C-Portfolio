@@ -1,7 +1,5 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Portfolio.Models;
-using Portfolio.Servicios;
 using PortFolio.Models;
 using PortFolio.Servicios;
 namespace PortFolio.Controllers;
@@ -11,25 +9,27 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly IRepositorios repositorios;//principio de inversion de dependencias
     private readonly IConfiguration configuration;
+    private readonly IservicioEmail servicioEmail;
 
     public HomeController
     (
     
     ILogger<HomeController> logger,
     IRepositorios repositorios,
-    IConfiguration configuration
+    IConfiguration configuration,
+    IservicioEmail servicioEmail
     
     )
     {
         _logger = logger;
         this.repositorios = repositorios;//inyeccion de dependencias.
         this.configuration = configuration;
+        this.servicioEmail = servicioEmail;
     }
      public IActionResult Index() 
      {
 
         var apellido = configuration.GetValue<String>("Apellido");
-        _logger.LogWarning("Apellido: "+apellido);
         var repo = new Repositorios();
         var proyectos = repo.ObtenerProyectos().Take(3).ToList(); 
         
@@ -50,6 +50,19 @@ public class HomeController : Controller
         return View();
     }
 
+
+    [HttpPost]
+    public async Task<IActionResult> Contacto(ContactoViewModel contactoViewModel){
+        await servicioEmail.Enviar(contactoViewModel);
+        return RedirectToAction("Gracias");
+    }
+
+
+
+
+    public IActionResult Gracias(){
+        return View();
+    }
     public IActionResult Privacy()
     {
         return View();
