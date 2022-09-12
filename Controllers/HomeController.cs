@@ -1,49 +1,45 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Portfolio.Models;
+using Portfolio.Servicios;
 using PortFolio.Models;
+using PortFolio.Servicios;
 namespace PortFolio.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly IRepositorios repositorios;//principio de inversion de dependencias
+    private readonly IConfiguration configuration;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController
+    (
+    
+    ILogger<HomeController> logger,
+    IRepositorios repositorios,
+    IConfiguration configuration
+    
+    )
     {
         _logger = logger;
+        this.repositorios = repositorios;//inyeccion de dependencias.
+        this.configuration = configuration;
     }
-    //ACCIONES CUANDO HACEMOS UNA PETICION HTTP A UNA RUTA ESPECIFICA
-    public IActionResult Index() // Este metodo es el que me devuelve la vista!
-    //de modo que pudedo nombrar los controladores de lo que quiero ejecutar
-    {
-        //dinamico sirve para pasar info a la view desde el controller
-        //trabaja solo en este scope;
-        /* ViewBag.Nombre = "Lucas Figueroa";
-        ViewBag.Edad = 22;
+     public IActionResult Index() 
+     {
 
-       
-        //Otra Forma Fuertemente tipado...
+        var apellido = configuration.GetValue<String>("Apellido");
+        _logger.LogWarning("Apellido: "+apellido);
+        var repo = new Repositorios();
+        var proyectos = repo.ObtenerProyectos().Take(3).ToList(); 
+        
 
-        var p = new Persona(){
-            Nombre = "Lucas Figueroa",
-            Edad = 22,
-        }; */
-        var proyectos = ObtenerProyectos().Take(3).ToList();
-        var modelo = new HomeindexViewModel(){Proyectos=proyectos}; // PASADOR DE INFO homeindexVM
+        var modelo = new HomeindexViewModel()
+        { Proyectos=proyectos, }; // PASADOR DE INFO homeindexVM
 
         return View(modelo);
     }
-    private List<Proyecto> ObtenerProyectos(){
-
-
-        return new List<Proyecto>(){
-            new Proyecto{Titulo="Grill-House",Descripcion="TODO GOOGLE VIEJO",Link="https://google.com",ImagenURL="/img/p1.png"},
-            new Proyecto{Titulo="Buen VIaje",Descripcion="TODO GOOGLE VIEJO",Link="https://google.com",ImagenURL="/img/p2.png"},
-            new Proyecto{Titulo="Google",Descripcion="TODO GOOGLE VIEJO",Link="https://google.com",ImagenURL="/img/p3.png"},
-        };
-
-
-
-    }
+ 
     public IActionResult Privacy()
     {
         return View();

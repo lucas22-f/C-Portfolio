@@ -64,6 +64,14 @@
     color: #6fc3dd;
 }
 
+.marsk{
+    margin-top: -60px;
+}
+@media (max-width:1080px){
+    .marsk{
+        margin: 0;
+    }
+}
 @media (max-width:768px){
     .descrip{
         margin: 20px 0 20px 0;
